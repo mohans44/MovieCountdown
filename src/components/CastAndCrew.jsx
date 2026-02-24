@@ -18,7 +18,7 @@ export default function CastAndCrew() {
             <motion.h2 
               initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: false, margin: "-100px" }}
+          viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 1.5, ease: "easeOut" }}
           className="text-xl sm:text-2xl md:text-5xl font-light text-primary uppercase tracking-[0.15em] md:tracking-[0.4em] whitespace-nowrap"
           style={{ textShadow: "0 0 25px rgba(255,153,51,0.3)"}}
@@ -40,7 +40,7 @@ export default function CastAndCrew() {
       >
         <CarouselContent className="-ml-3 md:-ml-8">
         {cast.map((person, index) => (
-            <CarouselItem key={`cast-${person.name}-${index}`} className="pl-3 md:pl-8 basis-1/3 lg:basis-1/4 xl:basis-1/5">
+            <CarouselItem key={`cast-${person.name}-${index}`} className="pl-3 md:pl-8 basis-1/3 lg:basis-1/4 xl:basis-1/5 transform-gpu will-change-transform">
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -49,12 +49,13 @@ export default function CastAndCrew() {
               >
                 <Card className="bg-transparent border-none overflow-hidden group cursor-pointer h-full">
                   <CardContent className="flex flex-col items-center justify-center p-0 relative h-full">
-                    <div className="relative w-full aspect-[2/3] overflow-hidden rounded border border-white/10 group-hover:border-[#D4AF37]/50 transition-colors duration-700 shadow-[0_0_20px_rgba(0,0,0,0.6)]">
+                    <div className="relative w-full aspect-[2/3] overflow-hidden rounded border border-white/10 group-hover:border-[#D4AF37]/50 transition-colors duration-700 shadow-[0_0_20px_rgba(0,0,0,0.6)] transform-gpu">
                       <img
                         src={person.image}
                         alt={person.role}
                         loading="lazy"
-                        className="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
+                        decoding="async"
+                        className="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105 will-change-transform transform-gpu"
                         onError={(e) => { e.target.src = 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=600&auto=format&fit=crop' }}
                       />
                       <div className="hidden md:flex absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-[#08091A] via-[#08091A]/70 to-transparent flex-col justify-end h-1/2">

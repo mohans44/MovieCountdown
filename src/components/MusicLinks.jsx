@@ -37,13 +37,13 @@ export default function MusicLinks() {
             <motion.button
               key={platform.name}
               onClick={() => handleClick(platform)}
-              whileHover={{ scale: 1.12, y: -4 }}
-              whileTap={{ scale: 0.95 }}
+              whileHover={{ scale: 1.05, y: -2 }}
+              whileTap={{ scale: 0.98 }}
               animate={isActive
-                ? { scale: 1.15, y: -4 }
+                ? { scale: 1.05, y: -2 }
                 : { scale: 1, y: 0 }
               }
-              transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+              transition={{ type: 'spring', stiffness: 400, damping: 25 }}
               title={platform.name}
               className="relative flex flex-col items-center gap-2 group"
             >
@@ -88,14 +88,19 @@ export default function MusicLinks() {
         })}
       </div>
 
-      <AnimatePresence mode="wait">
+      <AnimatePresence>
         {active && (
           <motion.div
             key={active.name}
-            initial={{ opacity: 0, y: 20, scale: 0.97 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 10, scale: 0.97 }}
-            transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+            layout
+            initial={{ opacity: 0, height: 0, scale: 0.98 }}
+            animate={{ opacity: 1, height: 'auto', scale: 1 }}
+            exit={{ opacity: 0, height: 0, scale: 0.98 }}
+            transition={{ 
+              height: { duration: 0.4, ease: [0.22, 1, 0.36, 1] },
+              opacity: { duration: 0.25 },
+              scale: { duration: 0.4 }
+            }}
             className="relative w-full rounded-2xl overflow-hidden border border-white/10 bg-[#0d0005]/60 backdrop-blur-md"
             style={{
               boxShadow: `0 0 60px ${active.accentColor.replace('0.6', '0.15')}`,

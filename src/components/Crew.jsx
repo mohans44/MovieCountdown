@@ -32,7 +32,7 @@ export default function EpicCrew() {
           >
             <CarouselContent className="-ml-3 md:-ml-8">
               {crew.map((person, index) => (
-                <CarouselItem key={`crew-${person.name}-${index}`} className="pl-3 md:pl-8 basis-1/3 lg:basis-1/4 xl:basis-1/5">
+                <CarouselItem key={`crew-${person.name}-${index}`} className="pl-3 md:pl-8 basis-1/3 lg:basis-1/4 xl:basis-1/5 transform-gpu will-change-transform">
                   <motion.div
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
@@ -41,12 +41,13 @@ export default function EpicCrew() {
                   >
                 <Card className="bg-transparent border-none overflow-hidden group cursor-pointer h-full">
                   <CardContent className="flex flex-col items-center justify-center p-0 relative h-full">
-                    <div className="relative w-full aspect-[2/3] overflow-hidden rounded border border-white/10 group-hover:border-[#D4AF37]/50 transition-colors duration-700 shadow-[0_0_20px_rgba(0,0,0,0.6)]">
+                    <div className="relative w-full aspect-[2/3] overflow-hidden rounded border border-white/10 group-hover:border-[#D4AF37]/50 transition-colors duration-700 shadow-[0_0_20px_rgba(0,0,0,0.6)] transform-gpu">
                       <img
                         src={person.image}
                         alt={person.role}
                         loading="lazy"
-                        className="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
+                        decoding="async"
+                        className="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105 will-change-transform transform-gpu"
                         onError={(e) => { e.target.src = 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=600&auto=format&fit=crop' }}
                       />
                       <div className="hidden md:flex absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-[#08091A] via-[#08091A]/70 to-transparent flex-col justify-end h-1/2">

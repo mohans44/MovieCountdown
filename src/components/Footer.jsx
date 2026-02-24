@@ -32,7 +32,7 @@ export default function Footer() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: false }}
           transition={{ delay: 0.5, duration: 1 }}
-          className="max-w-3xl text-white/50 text-[10px] sm:text-xs leading-relaxed font-sans"
+          className="max-w-5xl text-white/50 text-[10px] sm:text-xs leading-relaxed font-sans"
         >
           <p className="mb-2 text-white/70 tracking-widest uppercase text-[8px] sm:text-[10px]">
             A Fan-Made Tribute to the Upcoming Ramayana Epic

@@ -166,11 +166,12 @@ function Home() {
                     
                     if (e.target.pollingInterval) clearInterval(e.target.pollingInterval);
                     e.target.pollingInterval = setInterval(() => {
-                      if (e.target.getCurrentTime() >= 68.5) {
+                      // Trigger blackout even earlier (67.0s) to guarantee no end-cards flash
+                      if (e.target.getCurrentTime() >= 67.0) {
                         clearInterval(e.target.pollingInterval);
                         enterHomepage();
                       }
-                    }, 100);
+                    }, 50);
                   } else {
                     if (e.target.pollingInterval) clearInterval(e.target.pollingInterval);
                   }
