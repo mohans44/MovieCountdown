@@ -13,6 +13,7 @@ import MusicLinks from './components/MusicLinks';
 import Footer from './components/Footer';
 import Header from './components/Header';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import YouTube from 'react-youtube';
 import CharactersSection from './components/CharactersSection';
 import CharacterPage from './pages/CharacterPage';
 import KandasSection from './components/KandasSection';
@@ -68,21 +69,20 @@ function Home() {
   const sessionSkip = sessionStorage.getItem('skipIntro') === 'true';
   const shouldSkipIntro = location.state?.skipIntro || sessionSkip;
 
-  // 'landing' → static intro page
-  // 'playing' → fullscreen video with audio
-  // 'finished' → homepage
   const [introState, setIntroState] = useState(shouldSkipIntro ? 'finished' : 'landing');
   const [isMuted, setIsMuted] = useState(false);
+  const [isVideoReady, setIsVideoReady] = useState(false);
+  const [showBlackScreen, setShowBlackScreen] = useState(false);
   const audioRef = useRef(null);
   const videoRef = useRef(null);
   const scrollContainerRef = useRef(null);
 
-  // Step 1: "Enter the Realm" clicked → play video with audio
   const startVideo = () => {
     setIntroState('playing');
   };
 
   const enterHomepage = () => {
+    setShowBlackScreen(true);
     sessionStorage.setItem('skipIntro', 'true');
     setIntroState('finished');
     if (audioRef.current && !isMuted) {
@@ -150,23 +150,46 @@ function Home() {
             className="fixed inset-0 z-40 overflow-hidden"
             style={{ background: '#000' }}
           >
-            <video
-              ref={videoRef}
-              playsInline
-              onEnded={enterHomepage}
-              src="/src/assets/ramayana-intro.mp4"
-              style={{
-                position: 'absolute',
-                top: '50%',
-                left: '50%',
-                width: '100%',
-                height: '100%',
-                objectFit: 'cover',
-                objectPosition: 'center',
-                transform: 'translate(-50%, -50%) scale(1.22)',
-                transformOrigin: 'center center',
-              }}
-            />
+            {/* Loading Overlay (fades out when video is playing) */}
+            <div className={`absolute inset-0 bg-black z-40 transition-opacity duration-1000 pointer-events-none ${isVideoReady ? 'opacity-0' : 'opacity-100'}`} />
+            
+            {/* Exit Overlay (instant black to hide YouTube suggestions during unmount) */}
+            {showBlackScreen && <div className="absolute inset-0 bg-black z-50 pointer-events-none" />}
+
+            <div className="absolute top-1/2 left-1/2 w-full h-[150vh] -translate-x-1/2 -translate-y-1/2 pointer-events-none">
+              <YouTube
+                videoId="gzUu-FJ7s-Y"
+                onReady={(e) => {
+                  // Wait for the video to actually start playing
+                  if (e.target.getPlayerState() === 1) setIsVideoReady(true);
+                }}
+                onStateChange={(e) => {
+                  // State 1 is playing
+                  if (e.data === 1) setIsVideoReady(true);
+                }}
+                onEnd={enterHomepage}
+                opts={{
+                  width: '100%',
+                  height: '100%',
+                  playerVars: {
+                    autoplay: 1,
+                    controls: 0,
+                    showinfo: 0,
+                    modestbranding: 1,
+                    fs: 0,
+                    cc_load_policy: 0,
+                    iv_load_policy: 3,
+                    rel: 0,
+                    disablekb: 1,
+                    playsinline: 1,
+                    start: 3,
+                    end: 69
+                  }
+                }}
+                className="w-full h-full object-cover"
+                iframeClassName="w-full h-full scale-[1.3] object-cover pointer-events-none"
+              />
+            </div>
             <motion.a
               href="https://www.youtube.com/@WorldOfRamayana"
               target="_blank"

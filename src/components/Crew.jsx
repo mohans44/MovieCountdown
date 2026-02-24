@@ -34,10 +34,9 @@ export default function EpicCrew() {
               {crew.map((person, index) => (
                 <CarouselItem key={`crew-${person.name}-${index}`} className="pl-3 md:pl-8 basis-1/3 lg:basis-1/4 xl:basis-1/5">
                   <motion.div
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: false, margin: "-30px" }}
-                    transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.5 }}
                     className="h-full"
                   >
                 <Card className="bg-transparent border-none overflow-hidden group cursor-pointer h-full">
