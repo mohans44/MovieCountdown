@@ -67,7 +67,8 @@ function SnapSection({ id, children, className = '' }) {
 function Home() {
   const location = useLocation();
   const sessionSkip = sessionStorage.getItem('skipIntro') === 'true';
-  const shouldSkipIntro = location.state?.skipIntro || sessionSkip;
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 1024;
+  const shouldSkipIntro = location.state?.skipIntro || sessionSkip || isMobile;
 
   const [introState, setIntroState] = useState(shouldSkipIntro ? 'finished' : 'landing');
   const [isMuted, setIsMuted] = useState(false);
