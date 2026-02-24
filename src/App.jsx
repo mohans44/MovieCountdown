@@ -150,22 +150,30 @@ function Home() {
             className="fixed inset-0 z-40 overflow-hidden"
             style={{ background: '#000' }}
           >
-            {/* Loading Overlay (fades out when video is playing) */}
             <div className={`absolute inset-0 bg-black z-40 transition-opacity duration-1000 pointer-events-none ${isVideoReady ? 'opacity-0' : 'opacity-100'}`} />
             
-            {/* Exit Overlay (instant black to hide YouTube suggestions during unmount) */}
             {showBlackScreen && <div className="absolute inset-0 bg-black z-50 pointer-events-none" />}
 
             <div className="absolute top-1/2 left-1/2 w-full h-[150vh] -translate-x-1/2 -translate-y-1/2 pointer-events-none">
               <YouTube
                 videoId="gzUu-FJ7s-Y"
                 onReady={(e) => {
-                  // Wait for the video to actually start playing
                   if (e.target.getPlayerState() === 1) setIsVideoReady(true);
                 }}
                 onStateChange={(e) => {
-                  // State 1 is playing
-                  if (e.data === 1) setIsVideoReady(true);
+                  if (e.data === 1) {
+                    setIsVideoReady(true);
+                    
+                    if (e.target.pollingInterval) clearInterval(e.target.pollingInterval);
+                    e.target.pollingInterval = setInterval(() => {
+                      if (e.target.getCurrentTime() >= 68.5) {
+                        clearInterval(e.target.pollingInterval);
+                        enterHomepage();
+                      }
+                    }, 100);
+                  } else {
+                    if (e.target.pollingInterval) clearInterval(e.target.pollingInterval);
+                  }
                 }}
                 onEnd={enterHomepage}
                 opts={{
@@ -186,7 +194,7 @@ function Home() {
                     end: 69
                   }
                 }}
-                className="w-full h-full object-cover"
+                className={`w-full h-full object-cover transition-opacity duration-1000 ${isVideoReady ? 'opacity-100' : 'opacity-0'}`}
                 iframeClassName="w-full h-full scale-[1.3] object-cover pointer-events-none"
               />
             </div>
