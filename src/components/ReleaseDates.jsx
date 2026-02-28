@@ -63,7 +63,7 @@ export default function ReleaseDates() {
           </h2>
           <div className="h-px w-12 md:w-16 bg-[#D4AF37]/60" />
           <div className="text-center">
-            <p className="text-white/40 text-[7px] md:text-[10px] tracking-[0.2em] md:tracking-[0.5em] uppercase font-sans mb-1 md:mb-2 leading-tight">The<br className="block sm:hidden"/> Conclusion</p>
+            <p className="text-white/40 text-[7px] md:text-[10px] tracking-[0.2em] md:tracking-[0.5em] uppercase font-sans mb-1 md:mb-2 leading-tight">Worlwide<br className="block sm:hidden"/> Release</p>
             <p className="text-[#D4AF37] text-[10px] sm:text-xs md:text-xl tracking-[0.15em] md:tracking-[0.3em] uppercase font-sans whitespace-nowrap">Diwali 2027</p>
           </div>
         </motion.div>
