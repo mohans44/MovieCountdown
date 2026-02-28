@@ -193,7 +193,7 @@ export const releaseInfo = {
   },
   part2: {
     label: "Part 2",
-    sublabel: "The Conclusion",
+    sublabel: "Worldwide Release",
     date: "Diwali 2027",
   },
   teaserCountdownTarget: "2026-04-02T00:00:00", // Ram Navami 2026
